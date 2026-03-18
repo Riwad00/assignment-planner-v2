@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Assignment Planner V2
 
-## Getting Started
+AI-powered assignment planner that breaks down complex assignments into actionable step-by-step plans.
 
-First, run the development server:
+**Live demo:** [assignment-planner-v2.vercel.app](https://assignment-planner-v2.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## The Problem
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Students stare at a complex assignment brief and don't know where to start. The document is long, the requirements are scattered, and the overwhelm leads to procrastination. Pasting it into ChatGPT helps, but as the conversation grows, the model loses track of what you were working on.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## The Solution
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Upload an assignment PDF (or paste the brief), and the app turns it into a clear, structured plan. Each step tells you exactly what to do, how long it should take, and why it matters. Unlike a generic chatbot, every step has its own AI assistant that never loses context because each conversation is scoped to that specific step by design.
 
-## Learn More
+## Key Features
 
-To learn more about Next.js, take a look at the following resources:
+- **3-Phase AI Pipeline** - The plan goes through analyse, critique, and refine. A second AI reviews the plan for gaps and vague steps, then a third call fixes every issue found.
+- **Per-Step AI Chat** - Click any step and chat with an AI tutor that knows the full assignment, the full plan, and the specific details of that step. Full conversation history is maintained.
+- **Learning Resources** - Each step can fetch curated resources from the web (via OpenAI search) or from the LLM's training knowledge.
+- **4 LLM Providers** - OpenAI, Anthropic (Claude), Google Gemini, and Cohere. Users bring their own API key.
+- **Demo Mode** - Explore the full interface with pre-baked data, no API key needed.
+- **PDF Parsing** - Upload assignment PDFs directly; the app extracts and processes the text.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How the AI Pipeline Works
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Analyse** - Reads the assignment and generates a structured JSON plan with actionable steps, time estimates, and procrastination warnings
+2. **Critique** - A "demanding academic plan critic" reviews the plan, checking for missing coverage, vague steps, and unrealistic time estimates
+3. **Refine** - Takes the original plan + the critique and produces a corrected version that addresses every flagged issue
 
-## Deploy on Vercel
+All LLM output is validated with Zod schemas and automatically retried on failure, so the pipeline works reliably across all four providers.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Supported Providers
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Provider | Models |
+|----------|--------|
+| OpenAI | GPT-4o, GPT-4o-mini |
+| Anthropic | Claude Sonnet, Claude Haiku |
+| Google | Gemini 2.0 Flash, Gemini 1.5 Pro |
+| Cohere | Command R+, Command R |
+
+## Built With
+
+Next.js, TypeScript, Tailwind CSS, shadcn/ui, Framer Motion, Zod, unpdf
